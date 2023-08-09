@@ -9,8 +9,8 @@
       "server": "localhost",
       "port": 3306,
       "driver": "MySQL",
-      "name": "AppSalonConnection",
-      "database": "db_appsalon",
+      "name": "RealStateConnection",
+      "database": "db_realstate",
       "username": "root",
       "password": "test"
     }
