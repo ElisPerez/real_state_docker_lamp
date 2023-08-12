@@ -98,4 +98,4 @@ incluirTemplate('header');
   </article>
 </main>
 
-<?php include './includes/templates/footer.php'; ?>
+<?php incluirTemplate('footer'); ?>

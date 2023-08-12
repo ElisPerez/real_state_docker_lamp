@@ -233,4 +233,4 @@ incluirTemplate('header');
   <!-- END .contenedor-anuncios -->
 </main>
 
-<?php include './includes/templates/footer.php'; ?>
+<?php incluirTemplate('footer'); ?>
