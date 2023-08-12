@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Real State</title>
 
-  <link rel="stylesheet" href="./build/css/app.css" />
+  <link rel="stylesheet" href="/build/css/app.css" />
 </head>
 
 <body>
@@ -14,15 +14,15 @@
     <div class="contenedor contenido-header">
       <div class="barra">
         <a href="index.php">
-          <img src="src/img/logo.svg" alt="Real State logo" />
+          <img src="/build/img/logo.svg" alt="Real State logo" />
         </a>
 
         <div class="mobile-menu">
-          <img src="build/img/barras.svg" alt="Icono menu responsive" />
+          <img src="/build/img/barras.svg" alt="Icono menu responsive" />
         </div>
 
         <div class="derecha">
-          <img src="build/img/dark-mode.svg" alt="Moon dark mode" class="dark-mode-boton" />
+          <img src="/build/img/dark-mode.svg" alt="Moon dark mode" class="dark-mode-boton" />
           <nav class="navegacion">
             <a href="nosotros.php">Nosotros</a>
             <a href="anuncios.php">Anuncios</a>
