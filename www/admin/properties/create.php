@@ -4,6 +4,7 @@ require "../../includes/config/database.php";
 $db_connect = conectarDB();
 
 echo "<pre>";
+var_dump($_SERVER);
 var_dump($_POST);
 echo "</pre>";
 // var_dump($_GET);
