@@ -3,11 +3,31 @@
 require "../../includes/config/database.php";
 $db_connect = conectarDB();
 
-echo "<pre>";
-var_dump($_SERVER);
-var_dump($_POST);
-echo "</pre>";
-// var_dump($_GET);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+  $title       = $_POST["title"];
+  $price       = $_POST["price"];
+  $image       = $_POST["image"];
+  $description = $_POST["description"];
+  $rooms       = $_POST["rooms"];
+  $wc          = $_POST["wc"];
+  $parking_lot  = $_POST["parkinglot"];
+  $seller_id   = $_POST["sellerid"];
+
+  // Insertar en la base de datos
+  $query = "INSERT INTO properties (title, price, description, rooms, wc, parking_lot, seller_id) VALUES ('$title', '$price', '$description', '$rooms', '$wc', '$parking_lot', '$seller_id');";
+
+  $result = mysqli_query($db_connect, $query);
+
+  if ($result) {
+    echo "Insertado a la base de datos correctamente";
+  } else {
+    echo "ERROR:";
+    echo "<pre>";
+    echo var_dump($result);
+    echo "</pre>";
+  }
+}
 
 // Functions
 require '../../includes/functions.php';
@@ -23,38 +43,38 @@ incluirTemplate('header');
   <form action="/admin/properties/create.php" method="POST" class="formulario">
     <fieldset>
       <legend>Información General</legend>
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="titulo" placeholder="Título Propiedad" />
+      <label for="title">Título:</label>
+      <input type="text" id="title" name="title" placeholder="Título Propiedad" />
 
-      <label for="precio">Precio:</label>
-      <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" />
+      <label for="price">Precio:</label>
+      <input type="number" id="price" name="price" placeholder="Precio Propiedad" />
 
-      <label for="imagen">Imagen:</label>
-      <input type="file" id="imagen" name="imagen" accept="image/jpeg image/png" />
+      <label for="image">Imagen:</label>
+      <input type="file" id="image" name="image" accept="image/jpeg image/png" />
 
-      <label for="descripcion">Descripción:</label>
-      <textarea name="descripcion" id="descripcion"></textarea>
+      <label for="description">Descripción:</label>
+      <textarea name="description" id="description"></textarea>
     </fieldset>
 
     <fieldset>
       <legend>Información Propiedad</legend>
 
-      <label for="habitaciones">Habitaciones:</label>
-      <input type="number" id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" />
+      <label for="rooms">Habitaciones:</label>
+      <input type="number" id="rooms" name="rooms" placeholder="Ej: 3" min="1" max="9" />
 
       <label for="wc">Baños:</label>
       <input type="number" id="wc" name="wc" placeholder="Ej: 3" min="1" max="9" />
 
-      <label for="estacionamiento">Estacionamiento:</label>
-      <input type="number" id="estacionamiento" name="estacionamiento" placeholder="Ej: 3" min="1" max="9" />
+      <label for="parkinglot">Estacionamiento:</label>
+      <input type="number" id="parkinglot" name="parkinglot" placeholder="Ej: 3" min="1" max="9" />
     </fieldset>
 
     <fieldset>
       <legend>Vendedor</legend>
 
-      <select>
+      <select name="sellerid">
         <option value="1">Antonio</option>
-        <option value="2">Yami</option>
+        <option value="2">Efrain</option>
       </select>
     </fieldset>
 

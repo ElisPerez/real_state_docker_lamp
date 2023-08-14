@@ -8,10 +8,16 @@ I use docker-compose as an orchestrator. To run these containers:
 docker-compose up -d
 ```
 
-Stop:
+Stop and delete containers:
 
 ```
 docker-compose down
+```
+
+Delete all (Containers and Images):
+
+```
+docker compose down --volumes --rmi all
 ```
 
 Open phpmyadmin at [http://127.0.0.1:8000](http://127.0.0.1:8000)

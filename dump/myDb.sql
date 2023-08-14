@@ -37,13 +37,13 @@ CREATE TABLE IF NOT EXISTS `realstate_crud`.`properties` (
   `description` LONGTEXT NULL,
   `rooms` INT(1) NULL,
   `wc` INT(1) NULL,
-  `parkinglot` INT(1) NULL,
+  `parking_lot` INT(1) NULL,
   `create_at` DATE NULL,
-  `sellers_id` INT(11) NOT NULL,
+  `seller_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_properties_sellers_idx` (`sellers_id` ASC) VISIBLE,
+  INDEX `fk_properties_seller_idx` (`seller_id` ASC) VISIBLE,
   CONSTRAINT `fk_properties_sellers`
-    FOREIGN KEY (`sellers_id`)
+    FOREIGN KEY (`seller_id`)
     REFERENCES `realstate_crud`.`sellers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -63,4 +63,3 @@ INSERT INTO `realstate_crud`.`sellers` (`id`, `first_name`, `last_name`, `phone`
 INSERT INTO `realstate_crud`.`sellers` (`id`, `first_name`, `last_name`, `phone`) VALUES (2, 'Efrain Santiago', 'Perez', '4441234567');
 
 COMMIT;
-
