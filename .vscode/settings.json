@@ -10,7 +10,7 @@
       "port": 3306,
       "driver": "MySQL",
       "name": "RealStateConnection",
-      "database": "db_realstate",
+      "database": "realstate_crud",
       "username": "root",
       "password": "test"
     }
