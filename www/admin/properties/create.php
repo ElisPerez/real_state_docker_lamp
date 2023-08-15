@@ -3,6 +3,10 @@
 require "../../includes/config/database.php";
 $db_connect = conectarDB();
 
+// Array con mensajes de errores
+$errors = [];
+
+// Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   $title       = $_POST["title"];
@@ -11,21 +15,62 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $description = $_POST["description"];
   $rooms       = $_POST["rooms"];
   $wc          = $_POST["wc"];
-  $parking_lot  = $_POST["parkinglot"];
-  $seller_id   = $_POST["sellerid"];
+  $parking_lot = $_POST["parking_lot"];
+  // $seller_id   = $_POST["seller_id"] ?? '';
+  $seller_id   = !empty($_POST["seller_id"]) ? $_POST["seller_id"] : '';
 
-  // Insertar en la base de datos
-  $query = "INSERT INTO properties (title, price, description, rooms, wc, parking_lot, seller_id) VALUES ('$title', '$price', '$description', '$rooms', '$wc', '$parking_lot', '$seller_id');";
+  // echo "<pre>";
+  // var_dump($_POST);
+  // echo "</pre>";
 
-  $result = mysqli_query($db_connect, $query);
+  if (!$title) {
+    // Agregar elementos a un array
+    $errors[] = "Debes añadir un título";
+  }
 
-  if ($result) {
-    echo "Insertado a la base de datos correctamente";
-  } else {
-    echo "ERROR:";
-    echo "<pre>";
-    echo var_dump($result);
-    echo "</pre>";
+  if (!$price) {
+    $errors[] = "El precio es obligatorio";
+  }
+
+  if (strlen($description) < 50) {
+    $errors[] = "La descripción es obligatoria y debe tener al menos 50 carácteres";
+  }
+
+  if (!$rooms) {
+    $errors[] = 'Habitaciones es obligatorio';
+  }
+
+  if (!$wc) {
+    $errors[] = 'Baños es obligatorio';
+  }
+
+  if (!$parking_lot) {
+    $errors[] = 'Estacionamiento es obligatorio';
+  }
+
+  if (isset($seller_id) && !$seller_id) {
+    $errors[] = 'Vendedor es obligatorio';
+  }
+
+  // echo "<pre>";
+  // var_dump($errors);
+  // echo "</pre>";
+
+  // Revisar que el array de errors esté vacío
+  if (empty($errors)) {
+    // Insertar en la base de datos
+    $query = "INSERT INTO properties (title, price, description, rooms, wc, parking_lot, seller_id) VALUES ('$title', '$price', '$description', '$rooms', '$wc', '$parking_lot', '$seller_id');";
+
+    $result = mysqli_query($db_connect, $query);
+
+    if ($result) {
+      echo "Insertado a la base de datos correctamente";
+    } else {
+      echo "ERROR:";
+      echo "<pre>";
+      echo var_dump($result);
+      echo "</pre>";
+    }
   }
 }
 
@@ -39,6 +84,14 @@ incluirTemplate('header');
   <h1>Create</h1>
 
   <a href="/admin" class="boton boton-verde">Volver</a>
+
+  <?php foreach ($errors as $error) : ?>
+
+    <div class="alerta error">
+      <?php echo $error; ?>
+    </div>
+
+  <?php endforeach; ?>
 
   <form action="/admin/properties/create.php" method="POST" class="formulario">
     <fieldset>
@@ -65,14 +118,15 @@ incluirTemplate('header');
       <label for="wc">Baños:</label>
       <input type="number" id="wc" name="wc" placeholder="Ej: 3" min="1" max="9" />
 
-      <label for="parkinglot">Estacionamiento:</label>
-      <input type="number" id="parkinglot" name="parkinglot" placeholder="Ej: 3" min="1" max="9" />
+      <label for="parking_lot">Estacionamiento:</label>
+      <input type="number" id="parking_lot" name="parking_lot" placeholder="Ej: 3" min="1" max="9" />
     </fieldset>
 
     <fieldset>
       <legend>Vendedor</legend>
 
-      <select name="sellerid">
+      <select name="seller_id">
+        <option value="" disabled selected>-- Seleccione --</option>
         <option value="1">Antonio</option>
         <option value="2">Efrain</option>
       </select>

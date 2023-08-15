@@ -1,0 +1,12 @@
+.alerta {
+  padding: 0.5rem;
+  text-align: center;
+  color: $blanco;
+  font-weight: $bold;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  // cuando estan en el mismo nivel se coloca el ampersand (&)
+  &.error {
+    background-color: $rojo;
+  }
+}
