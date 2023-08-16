@@ -23,15 +23,25 @@ $create_at   = date('Y/m/d');
 
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $title       = $_POST["title"];
-  $price       = $_POST["price"];
-  $image       = $_POST["image"];
-  $description = $_POST["description"];
-  $rooms       = $_POST["rooms"];
-  $wc          = $_POST["wc"];
-  $parking_lot = $_POST["parking_lot"];
+  // echo "<pre>";
+  // echo var_dump($_FILES);
+  // echo "</pre>";
+
+  // exit;
+
+  $title       = mysqli_real_escape_string($db_connect, $_POST["title"]);
+  $price       = mysqli_real_escape_string($db_connect, $_POST["price"]);
+  $image       = mysqli_real_escape_string($db_connect, $_POST["image"]);
+  $description = mysqli_real_escape_string($db_connect, $_POST["description"]);
+  $rooms       = mysqli_real_escape_string($db_connect, $_POST["rooms"]);
+  $wc          = mysqli_real_escape_string($db_connect, $_POST["wc"]);
+  $parking_lot = mysqli_real_escape_string($db_connect, $_POST["parking_lot"]);
+  $seller_id   = mysqli_real_escape_string($db_connect, $_POST["seller_id"]);
   // $seller_id   = $_POST["seller_id"] ?? '';
-  $seller_id   = !empty($_POST["seller_id"]) ? $_POST["seller_id"] : '';
+  // $seller_id   = !empty($_POST["seller_id"]) ? $_POST["seller_id"] : '';
+
+  // Asignar $_Files a una variable
+  $image = $_FILES["image"];
 
   if (!$title) {
     // Agregar elementos a un array
@@ -58,8 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errors[] = 'Estacionamiento es obligatorio';
   }
 
-  if (isset($seller_id) && !$seller_id) {
+  if (!$seller_id) {
     $errors[] = 'Vendedor es obligatorio';
+  }
+
+  if (!$image["name"]) {
+    $errors[] = 'La imagen es obligatoria';
+  }
+
+  // Validar por tamaño (100Kb max)
+  $medida = 1000 * 100;
+  if ($image["size"] > $medida || $image["error"]) {
+    $errors[] = 'La imagen es muy pesada';
   }
 
   // Revisar que el array de errors esté vacío
@@ -95,7 +115,7 @@ incluirTemplate('header');
 
   <?php endforeach; ?>
 
-  <form action="/admin/properties/create.php" method="POST" class="formulario">
+  <form action="/admin/properties/create.php" method="POST" class="formulario" enctype="multipart/form-data">
     <fieldset>
       <legend>Información General</legend>
       <label for="title">Título:</label>
