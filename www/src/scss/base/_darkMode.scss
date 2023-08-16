@@ -1,5 +1,6 @@
 .dark-mode {
   background-color: darken($grisOscuro, 10);
+  color: $blanco;
 
   p {
     color: $blanco;
@@ -40,7 +41,7 @@
       color: $gris;
     }
 
-    input:not([type="submit"]),
+    input:not([type='submit']),
     textarea,
     select {
       background-color: $grisOscuro;

@@ -5,8 +5,7 @@ $db_connect = conectarDB();
 
 // Consultar para obtener los vendedores
 $query_sellers = "SELECT * FROM sellers;";
-
-$sellers = mysqli_query($db_connect, $query_sellers);
+$response_sellers = mysqli_query($db_connect, $query_sellers);
 
 // Array con mensajes de errores
 $errors = [];
@@ -101,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $extension = pathinfo($image["name"])["extension"];
 
     // Generar un nombre único
-    $imageName = md5( uniqid( rand(), true ) ) . "." . $extension;
+    $imageName = md5(uniqid(rand(), true)) . "." . $extension;
 
     // Subir la imagen al servidor local
     move_uploaded_file($image["tmp_name"], $folderImages . $imageName);
@@ -113,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result) {
       // Redireccionar al usuario
-      header('Location: /admin');
+      header('Location: /admin?result=1');
     }
   }
 }
@@ -125,13 +124,13 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion">
-  <h1>Create</h1>
+  <h1>Crear</h1>
 
   <a href="/admin" class="boton boton-verde">Volver</a>
 
   <?php foreach ($errors as $error) : ?>
 
-    <div class="alerta error">
+    <div class="alert error">
       <?php echo $error; ?>
     </div>
 
@@ -175,7 +174,7 @@ incluirTemplate('header');
 
       <select name="seller_id">
         <option value="">-- Seleccione --</option>
-        <?php while ($row = mysqli_fetch_assoc($sellers)) : ?>
+        <?php while ($sellers = mysqli_fetch_assoc($response_sellers)) : ?>
           <option <?php echo $seller_id === $row["id"] ? 'selected' : ''; ?> value="<?php echo $row["id"] ?>">
             <?php echo $row["first_name"] . " " . $row["last_name"]; ?>
           </option>
