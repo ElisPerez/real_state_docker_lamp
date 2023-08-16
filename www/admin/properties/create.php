@@ -42,6 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // Asignar $_Files a una variable
   $image = $_FILES["image"];
+  echo "<pre>";
+  echo var_dump($image);
+  echo "</pre>";
 
   if (!$title) {
     // Agregar elementos a un array
@@ -76,16 +79,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errors[] = 'La imagen es obligatoria';
   }
 
-  // Validar por tamaño (100Kb max)
-  $medida = 1000 * 100;
+  // Validar por tamaño (1Mb max)
+  $medida = 1000 * 1000;
   if ($image["size"] > $medida || $image["error"]) {
     $errors[] = 'La imagen es muy pesada';
   }
 
   // Revisar que el array de errors esté vacío
   if (empty($errors)) {
+    /** SUBIDA DE ARCHIVOS */
+
+    // Crear carpeta
+    $folderImages = '../../images/';
+
+    // Verificar si ya existe la carpeta images
+    if (!is_dir($folderImages)) {
+      mkdir($folderImages);
+    }
+
+    // Obtener la extension
+    $extension = pathinfo($image["name"])["extension"];
+
+    // Generar un nombre único
+    $imageName = md5( uniqid( rand(), true ) ) . "." . $extension;
+
+    // Subir la imagen al servidor local
+    move_uploaded_file($image["tmp_name"], $folderImages . $imageName);
+
     // Insertar en la base de datos
-    $query = "INSERT INTO properties (title, price, description, rooms, wc, parking_lot, create_at, seller_id) VALUES ('$title', '$price', '$description', '$rooms', '$wc', '$parking_lot', '$create_at', '$seller_id');";
+    $query = "INSERT INTO properties (title, price, image, description, rooms, wc, parking_lot, create_at, seller_id) VALUES ('$title', '$price', '$imageName', '$description', '$rooms', '$wc', '$parking_lot', '$create_at', '$seller_id');";
 
     $result = mysqli_query($db_connect, $query);
 

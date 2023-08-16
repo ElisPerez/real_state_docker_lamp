@@ -48,6 +48,15 @@ function charCounterHandler() {
   const textarea = document.querySelector('#description');
   const charCount = document.querySelector('#charCount');
 
+  // Calculating and displaying initial character count
+  const initialCount = textarea.value.length;
+  charCount.textContent = initialCount;
+
+  // Adding class to the count if exceeding the limit
+  if (initialCount < 50 || initialCount > 250) {
+    charCount.classList.add('char-count');
+  }
+
   textarea.addEventListener('input', function () {
     const currentCount = textarea.value.length;
     charCount.textContent = currentCount;
