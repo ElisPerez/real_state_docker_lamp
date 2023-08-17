@@ -17,6 +17,13 @@ DESCRIBE services;
           PRIMARY KEY (id)
           );
 
-DESCRIBE appointments;
+   CREATE TABLE users (
+          id INT (1) NOT NULL AUTO_INCREMENT,
+          email VARCHAR(50) NOT NULL,
+          password CHAR(60) NOT NULL,
+          PRIMARY KEY (id)
+          );
+
+DESCRIBE users;
 
 SHOW TABLES;
