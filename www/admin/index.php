@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     $result_delete_property = mysqli_query($db_connection, $query_delete_property);
 
     if ($result_delete_property) {
-      header('location: /admin');
+      header('location: /admin?result=3');
     }
   }
 }
@@ -47,6 +47,8 @@ incluirTemplate('header');
     <p class="alert success">Anuncio Creado Correctamente</p>
   <?php elseif (intval($result) === 2) : ?>
     <p class="alert success">Anuncio Actualizado Correctamente</p>
+  <?php elseif (intval($result) === 3) : ?>
+    <p class="alert success">Anuncio Eliminado Correctamente</p>
   <?php endif; ?>
 
   <a href="/admin/properties/create.php" class="boton boton-verde">Nueva Propiedad</a>
