@@ -1,4 +1,14 @@
 <?php
+// Functions
+require '../../includes/functions.php';
+
+// SESION DEL USER
+$auth = isAuthenticated();
+
+if (!$auth) {
+  header('location: /login.php');
+}
+
 // DataBase
 require "../../includes/config/database.php";
 $db_connect = conectarDB();
@@ -113,9 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   }
 }
-
-// Functions
-require '../../includes/functions.php';
 
 incluirTemplate('header');
 ?>

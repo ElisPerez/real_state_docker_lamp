@@ -1,4 +1,14 @@
 <?php
+require '../includes/functions.php';
+
+// SESION DEL USER
+$auth = isAuthenticated();
+
+if (!$auth) {
+  header('location: /login.php');
+}
+
+
 // Importar la conexión a la database
 require '../includes/config/database.php';
 $db_connection = conectarDB();
@@ -37,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 }
 
 // Incluye un template
-require '../includes/functions.php';
 incluirTemplate('header');
 ?>
 
