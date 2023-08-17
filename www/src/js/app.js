@@ -3,7 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   darkMode();
 
-  charCounterHandler();
+  const pathname = window.location.pathname;
+  const routesCharCounter = [
+    '/admin/properties/update.php',
+    '/admin/properties/create.php',
+  ];
+
+  if (routesCharCounter.includes(pathname)) {
+    charCounterHandler();
+  }
 });
 
 function darkMode() {
@@ -55,6 +63,8 @@ function charCounterHandler() {
   // Adding class to the count if exceeding the limit
   if (initialCount < 50 || initialCount > 250) {
     charCount.classList.add('char-count');
+  } else {
+    charCount.classList.remove('char-count');
   }
 
   textarea.addEventListener('input', function () {

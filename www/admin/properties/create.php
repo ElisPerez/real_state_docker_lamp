@@ -41,9 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   // Asignar $_Files a una variable
   $image = $_FILES["image"];
-  echo "<pre>";
-  echo var_dump($image);
-  echo "</pre>";
 
   if (!$title) {
     // Agregar elementos a un array
@@ -175,8 +172,8 @@ incluirTemplate('header');
       <select name="seller_id">
         <option value="">-- Seleccione --</option>
         <?php while ($sellers = mysqli_fetch_assoc($response_sellers)) : ?>
-          <option <?php echo $seller_id === $row["id"] ? 'selected' : ''; ?> value="<?php echo $row["id"] ?>">
-            <?php echo $row["first_name"] . " " . $row["last_name"]; ?>
+          <option <?php echo $seller_id === $sellers["id"] ? 'selected' : ''; ?> value="<?php echo $sellers["id"] ?>">
+            <?php echo $sellers["first_name"] . " " . $sellers["last_name"]; ?>
           </option>
         <?php endwhile; ?>
       </select>
