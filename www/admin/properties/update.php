@@ -14,7 +14,7 @@ $db_connect = conectarDB();
 // Consulta para obtener la propiedad a actualizar
 $query_property = "SELECT * FROM properties WHERE id = ${id};";
 $response_property = mysqli_query($db_connect, $query_property);
-$property = mysqli_fetch_assoc($response_property);
+$row_property = mysqli_fetch_assoc($response_property); // Al llamar solo una vez la funcion mysqli_fetch_assoc devuelve la primera fila de la tabla de la respuesta de la consulta
 
 
 // Consultar para obtener los vendedores
@@ -24,16 +24,16 @@ $response_sellers = mysqli_query($db_connect, $query_sellers);
 // Array con mensajes de errores
 $errors = [];
 
-$title       = $property["title"];
-$price       = $property["price"];
-$description = $property["description"];
-$rooms       = $property["rooms"];
-$wc          = $property["wc"];
-$parking_lot = $property["parking_lot"];
-$seller_id   = $property["seller_id"];
+$title       = $row_property["title"];
+$price       = $row_property["price"];
+$description = $row_property["description"];
+$rooms       = $row_property["rooms"];
+$wc          = $row_property["wc"];
+$parking_lot = $row_property["parking_lot"];
+$seller_id   = $row_property["seller_id"];
 $create_at   = date('Y/m/d');
 // Imagen para mostrar
-$image_property = $property["image"];
+$image_property = $row_property["image"];
 
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -187,9 +187,9 @@ incluirTemplate('header');
 
       <select name="seller_id">
         <option value="">-- Seleccione --</option>
-        <?php while ($sellers = mysqli_fetch_assoc($response_sellers)) : ?>
-          <option <?php echo $seller_id === $sellers["id"] ? 'selected' : ''; ?> value="<?php echo $sellers["id"] ?>">
-            <?php echo $sellers["first_name"] . " " . $sellers["last_name"]; ?>
+        <?php while ($row_seller = mysqli_fetch_assoc($response_sellers)) : ?>
+          <option <?php echo $seller_id === $row_seller["id"] ? 'selected' : ''; ?> value="<?php echo $row_seller["id"] ?>">
+            <?php echo $row_seller["first_name"] . " " . $row_seller["last_name"]; ?>
           </option>
         <?php endwhile; ?>
       </select>

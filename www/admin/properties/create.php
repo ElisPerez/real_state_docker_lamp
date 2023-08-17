@@ -171,9 +171,9 @@ incluirTemplate('header');
 
       <select name="seller_id">
         <option value="">-- Seleccione --</option>
-        <?php while ($sellers = mysqli_fetch_assoc($response_sellers)) : ?>
-          <option <?php echo $seller_id === $sellers["id"] ? 'selected' : ''; ?> value="<?php echo $sellers["id"] ?>">
-            <?php echo $sellers["first_name"] . " " . $sellers["last_name"]; ?>
+        <?php while ($row_seller = mysqli_fetch_assoc($response_sellers)) : ?>
+          <option <?php echo $seller_id === $row_seller["id"] ? 'selected' : ''; ?> value="<?php echo $row_seller["id"] ?>">
+            <?php echo $row_seller["first_name"] . " " . $row_seller["last_name"]; ?>
           </option>
         <?php endwhile; ?>
       </select>

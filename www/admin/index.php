@@ -20,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
   if ($id) {
     // Obtener nombre de la imagen a eliminar
     $query_image = "SELECT image FROM properties WHERE id = ${id};";
-    $result_image = mysqli_query($db_connection, $query_image);
-    $image_array = mysqli_fetch_assoc($result_image);
+    $result_set_image = mysqli_query($db_connection, $query_image);
+    $row_image = mysqli_fetch_assoc($result_set_image); // Como estoy llamando una sola vez a mysqli_fetch_assoc solo devuelve la primera fila de la tabla.
 
-    $image_path_to_delete = '../images/' . $image_array["image"];
+    $image_path_to_delete = '../images/' . $row_image["image"];
     unlink($image_path_to_delete);
 
     // Eliminar la propiedad de la DB
@@ -63,19 +63,19 @@ incluirTemplate('header');
     </thead>
     <tbody>
       <!-- Mostrar los datos de la DB -->
-      <?php while ($property = mysqli_fetch_assoc($properties)) : ?>
+      <?php while ($row_property = mysqli_fetch_assoc($properties)) : ?>
         <tr>
           <td>
-            <?php echo $property["id"]; ?>
+            <?php echo $row_property["id"]; ?>
           </td>
-          <td><?php echo $property["title"]; ?></td>
-          <td><img src="/images/<?php echo $property["image"]; ?>" alt="Casa en la playa" class="image-table" /></td>
-          <td>$<?php echo $property["price"]; ?></td>
+          <td><?php echo $row_property["title"]; ?></td>
+          <td><img src="/images/<?php echo $row_property["image"]; ?>" alt="Casa en la playa" class="image-table" /></td>
+          <td>$<?php echo $row_property["price"]; ?></td>
           <td>
-            <a href="properties/update.php?id=<?php echo $property["id"]; ?>" class="boton-amarillo-block">Actualizar</a>
+            <a href="properties/update.php?id=<?php echo $row_property["id"]; ?>" class="boton-amarillo-block">Actualizar</a>
 
             <form method="POST" class="w-100">
-              <input type="hidden" name="id" value="<?php echo $property["id"]; ?>" />
+              <input type="hidden" name="id" value="<?php echo $row_property["id"]; ?>" />
               <input type="submit" class="boton-rojo-block" value="Eliminar" />
             </form>
           </td>
