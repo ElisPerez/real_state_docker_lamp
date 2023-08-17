@@ -12,6 +12,30 @@ $properties = mysqli_query($db_connection, $query);
 // Muestra mensaje condicional
 $result = $_GET["result"] ?? null;
 
+// Eliminar una property
+if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+  $id = $_POST["id"];
+  $id = filter_var($id,  FILTER_VALIDATE_INT);
+
+  if ($id) {
+    // Obtener nombre de la imagen a eliminar
+    $query_image = "SELECT image FROM properties WHERE id = ${id};";
+    $result_image = mysqli_query($db_connection, $query_image);
+    $image_array = mysqli_fetch_assoc($result_image);
+
+    $image_path_to_delete = '../images/' . $image_array["image"];
+    unlink($image_path_to_delete);
+
+    // Eliminar la propiedad de la DB
+    $query_delete_property = "DELETE FROM properties WHERE id = ${id};";
+    $result_delete_property = mysqli_query($db_connection, $query_delete_property);
+
+    if ($result_delete_property) {
+      header('location: /admin');
+    }
+  }
+}
+
 // Incluye un template
 require '../includes/functions.php';
 incluirTemplate('header');
@@ -49,7 +73,11 @@ incluirTemplate('header');
           <td>$<?php echo $property["price"]; ?></td>
           <td>
             <a href="properties/update.php?id=<?php echo $property["id"]; ?>" class="boton-amarillo-block">Actualizar</a>
-            <a href="#" class="boton-rojo-block">Eliminar</a>
+
+            <form method="POST" class="w-100">
+              <input type="hidden" name="id" value="<?php echo $property["id"]; ?>" />
+              <input type="submit" class="boton-rojo-block" value="Eliminar" />
+            </form>
           </td>
         </tr>
       <?php endwhile; ?>
