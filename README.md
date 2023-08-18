@@ -41,3 +41,16 @@ Run MySQL client:
 
 # Notas de PHP
 - La función `mysqli_fetch_assoc` devuelve una fila de la tabla cada vez que se llame. Cuando se acaban las filas devuelve null.
+
+# Composer
+- Para ejecutar comandos de Composer (composer init por ejemplo) hay que primero entrar en el contenedor WWW en docker a travez de el siguiente comando:
+  - Abrir la terminal integrada de VSCode para que inicie en la carpeta del proyecto.
+  - Ejecutar el comando `docker container exec -it <id-del-contenedor> /bin/bash` para entrar en la terminal bash del container.
+  - Ahora si puedes escribir tus comandos de composer. Para crear tu composer.json ejecuta el comando `composer init` y sigue los pasos (es como crear el package.json de npm init).
+  - Para salir de la terminal bash del contenedor escribir: `exit`.
+
+## Composer commands
+
+- composer init: Inicia la creacion del composer.json (tipo package.json de npm init).
+- composer update: Despues de que realicemos un cambio al composer.json debemos actualizar con este comando.
+- La carpeta `vendor` es el equivalente a la carpeta `node_modules` en NPM.

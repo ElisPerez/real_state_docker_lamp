@@ -80,19 +80,19 @@
 - `docker container exec <opciones> <contenedor> <comando>`
   Ejecuta un comando dentro de un contenedor en ejecución.
 
-  - Ejemplo: docker container exec -it b8b70da89ea1 /bin/bash
+  - Ejemplo: `docker container exec -it b8b70da89ea1 /bin/bash`
 
     - El comando `docker container exec` te permite ejecutar comandos dentro del contenedor, y en este caso, estás ejecutando una instancia interactiva del intérprete de comandos Bash dentro del contenedor especificado.
     - Contenedor Docker: Cuando se crea un contenedor, puede tener su propio sistema de archivos independiente. En este sistema de archivos del contenedor, las ubicaciones de los archivos y directorios son específicas para ese contenedor y no están relacionadas con el sistema de archivos del host.
-    - Ubicación del Intérprete de Comandos en el Contenedor: La ruta /bin/bash se refiere al intérprete de comandos Bash ubicado dentro del sistema de archivos del contenedor. En los sistemas Unix-like, el directorio /bin es donde se almacenan los archivos ejecutables esenciales del sistema.
-    - Ejecución del Comando: Al ejecutar el comando docker container exec -it b8b70da89ea1 /bin/bash, estás indicando a Docker que quieras ejecutar una instancia del intérprete de comandos Bash dentro del contenedor con ID b8b70da89ea1.
-    - El comando docker container exec -it b8b70da89ea1 /bin/bash se utiliza para ejecutar un shell interactivo dentro de un contenedor Docker específico. Veamos el significado de las opciones -it:
+    - Ubicación del Intérprete de Comandos en el Contenedor: La ruta `/bin/bash` se refiere al intérprete de comandos Bash ubicado dentro del sistema de archivos del contenedor. En los sistemas Unix-like, el directorio /bin es donde se almacenan los archivos ejecutables esenciales del sistema.
+    - Ejecución del Comando: Al ejecutar el comando `docker container exec -it b8b70da89ea1 /bin/bash`, estás indicando a Docker que quieras ejecutar una instancia del intérprete de comandos Bash dentro del contenedor con ID b8b70da89ea1.
+    - El comando `docker container exec -it b8b70da89ea1 /bin/bash` se utiliza para ejecutar un shell interactivo dentro de un contenedor Docker específico. Veamos el significado de las opciones -it:
 
-      - La opción -i (abreviatura de "interactive") indica que quieres tener una sesión interactiva con el contenedor. Esto significa que podrás enviar comandos al shell del contenedor y recibir respuestas en tiempo real.
+      - La opción `-i` (abreviatura de "interactive") indica que quieres tener una sesión interactiva con el contenedor. Esto significa que podrás enviar comandos al shell del contenedor y recibir respuestas en tiempo real.
 
-      - La opción -t (abreviatura de "tty") se utiliza para asignar un pseudo terminal (TTY) en la sesión interactiva. Esto permite que los comandos que ingreses y las respuestas del contenedor se muestren de manera adecuada, como si estuvieras interactuando con un terminal normal.
+      - La opción `-t` (abreviatura de "tty") se utiliza para asignar un pseudo terminal (TTY) en la sesión interactiva. Esto permite que los comandos que ingreses y las respuestas del contenedor se muestren de manera adecuada, como si estuvieras interactuando con un terminal normal.
 
-      - Al usar ambas opciones -i y -t, puedes acceder a una sesión de terminal dentro del contenedor de manera interactiva. En este caso, el comando ejecuta /bin/bash, que es el intérprete de comandos Bash, dentro del contenedor con ID b8b70da89ea1. Esto te proporciona un shell dentro del contenedor para ejecutar comandos y explorar su entorno.
+      - Al usar ambas opciones `-i` y `-t`, puedes acceder a una sesión de terminal dentro del contenedor de manera interactiva. En este caso, el comando ejecuta /bin/bash, que es el intérprete de comandos Bash, dentro del contenedor con ID b8b70da89ea1. Esto te proporciona un shell dentro del contenedor para ejecutar comandos y explorar su entorno.
 
 # Redes en Docker
 
