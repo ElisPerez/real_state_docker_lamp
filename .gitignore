@@ -4,6 +4,8 @@ www/build/*
 www/node_modules
 www/node_modules/*
 www/package-lock.json
+www/vendor
+www/vendor/*
 
 .env
 .# Editor directories and files

@@ -1,6 +1,6 @@
-# docker-lamp
+# Docker LAMP with NodeJS
 
-Docker with Apache, MySQL 8.0, PHPMyAdmin and PHP.
+Docker with Apache, MySQL 8.0.34, PHPMyAdmin 5.2.1, PHP 8.0.0, Composer (getcomposer.org) and NodeJS 18.x
 
 I use docker-compose as an orchestrator. To run these containers:
 
@@ -14,14 +14,17 @@ Stop and delete containers:
 docker-compose down
 ```
 
-Delete all (Containers and Images):
+Delete all (Containers, volumes and Images):
 
 ```
 docker compose down --volumes --rmi all
 ```
 
 Open phpmyadmin at [http://127.0.0.1:8000](http://127.0.0.1:8000)
-Open web browser to look at a simple php example at [http://127.0.0.1:80](http://127.0.0.1:80)
+
+Open web browser with yout project at [http://127.0.0.1:80](http://127.0.0.1:80)
+
+## Multiple projects:
 
 Clone YourProject on `www/` and then, open web [http://127.0.0.1/YourProject](http://127.0.0.1/YourProject)
 
@@ -39,12 +42,10 @@ Run MySQL client:
 - Estos archivos SQL se ejecutarán automáticamente durante el proceso de inicio de MySQL y cargarán los datos en la base de datos.
 - El nombre "dump" en este contexto se refiere al directorio local que contiene archivos SQL para inicializar la base de datos MySQL.
 
-# Notas de PHP
-- La función `mysqli_fetch_assoc` devuelve una fila de la tabla cada vez que se llame. Cuando se acaban las filas devuelve null.
-
 # Composer
+
 - Para ejecutar comandos de Composer (composer init por ejemplo) hay que primero entrar en el contenedor WWW en docker a travez de el siguiente comando:
-  - Abrir la terminal integrada de VSCode para que inicie en la carpeta del proyecto.
+  - Abrir la terminal integrada de VSCode para que inicie en la carpeta del proyecto o abrir la terminal externa con la combinación de teclas **CTRL + SHIFT + C**.
   - Ejecutar el comando `docker container exec -it <id-del-contenedor> /bin/bash` para entrar en la terminal bash del container.
   - Ahora si puedes escribir tus comandos de composer. Para crear tu composer.json ejecuta el comando `composer init` y sigue los pasos (es como crear el package.json de npm init).
   - Para salir de la terminal bash del contenedor escribir: `exit`.
@@ -54,3 +55,7 @@ Run MySQL client:
 - composer init: Inicia la creacion del composer.json (tipo package.json de npm init).
 - composer update: Despues de que realicemos un cambio al composer.json debemos actualizar con este comando.
 - La carpeta `vendor` es el equivalente a la carpeta `node_modules` en NPM.
+
+# Notas de PHP
+
+- La función `mysqli_fetch_assoc` devuelve una fila de la tabla cada vez que se llame. Cuando se acaban las filas devuelve null.

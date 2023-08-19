@@ -15,14 +15,14 @@ RUN docker-php-ext-install mysqli zip mbstring gd
 # Instala Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Activa el módulo de reescritura de Apache
-RUN a2enmod rewrite
-
 # Instala Node.js y npm
-# RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
 
 # Copia el archivo php.ini personalizado al contenedor
 COPY php.ini /usr/local/etc/php/php.ini
+
+# Activa el módulo de reescritura de Apache
+RUN a2enmod rewrite
 
 # Comando para iniciar el servidor Apache
 CMD ["apache2-foreground"]
