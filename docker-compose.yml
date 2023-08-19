@@ -15,7 +15,7 @@ services:
       - ./conf:/etc/mysql/conf.d
       - ./mysql:/var/lib/mysql
     networks:
-      - default
+      - my_network
   www:
     build: .
     container_name: www
@@ -24,7 +24,7 @@ services:
     volumes:
       - ./www:/var/www/html
     networks:
-      - default
+      - my_network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.2.1
     container_name: phpmyadmin
@@ -34,4 +34,8 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-
+    networks:
+      - my_network
+networks:
+  my_network:
+    name: mynetwork
