@@ -1,4 +1,8 @@
 <?php
+require 'functions.php';
+require 'config/database.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-define('TEMPLATES_URL', __DIR__ . '/templates');
-define('FUNCTIONS_URL', __DIR__ . '/functions.php');
+use App\Property;
+
+$property = new Property; // si no tiene parámetros el parentesis es opcional

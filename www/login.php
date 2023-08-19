@@ -1,15 +1,15 @@
 <?php
-require 'includes/functions.php';
+require 'includes/app.php';
+
+// Database
+$db_connection = conectarDB();
+
 // SESION DEL USER
 $auth = isAuthenticated();
 
 if ($auth) {
   header('location: /admin');
 }
-
-// Database
-require 'includes/config/database.php';
-$db_connection = conectarDB();
 
 // Errores
 $errors = [];
@@ -60,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // echo "El email del usuario es: " . $email;
 
         header('location: /admin');
-
       } else {
         $errors[] = "Contraseña no válida";
       }

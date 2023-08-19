@@ -1,6 +1,4 @@
 <?php
-// Importar la DB
-require __DIR__ . '/../config/database.php'; // Se hizo asi porque el require es relativo a donde se esté incluyendo el anuncios.php, no a la hubicacion de anuncios.php
 $db_connection = conectarDB();
 
 // Consultar la DB

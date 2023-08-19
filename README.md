@@ -32,6 +32,10 @@ Run MySQL client:
 
 - `docker compose exec db mysql -u root -p`
 
+Run bash in the `www` container:
+
+- `docker container exec -it www /bin/bash`: Al usar el tag "www" no hay que buscar el id con `docker ps`. Asi que Cada vez que se genere un nuevo container con un nuevo ID todos tendrán el tag www.
+
 ### Infrastructure model
 
 ![Infrastructure model](.infragenie/infrastructure_model.png)
@@ -44,9 +48,9 @@ Run MySQL client:
 
 # Composer
 
-- Para ejecutar comandos de Composer (composer init por ejemplo) hay que primero entrar en el contenedor WWW en docker a travez de el siguiente comando:
+- Para ejecutar comandos de Composer (composer init por ejemplo) hay que primero entrar en el contenedor WWW en docker para usar su propia terminal bash. Lo logramos a travez de el siguiente comando:
   - Abrir la terminal integrada de VSCode para que inicie en la carpeta del proyecto o abrir la terminal externa con la combinación de teclas **CTRL + SHIFT + C**.
-  - Ejecutar el comando `docker container exec -it <id-del-contenedor> /bin/bash` para entrar en la terminal bash del container.
+  - Ejecutar el comando `docker container exec -it <id del contenedor or tag> /bin/bash` para entrar en la terminal bash del container. En nuestro caso tenemos un tag para el container web que es `www` asi que el comando quedaria `docker container exec -it www /bin/bash`
   - Ahora si puedes escribir tus comandos de composer. Para crear tu composer.json ejecuta el comando `composer init` y sigue los pasos (es como crear el package.json de npm init).
   - Para salir de la terminal bash del contenedor escribir: `exit`.
 

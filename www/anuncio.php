@@ -6,11 +6,9 @@ if (!$id) {
   header('location: /');
 }
 
-require 'includes/functions.php';
-incluirTemplate('header');
+require 'includes/app.php';
 
-// Importar la DB
-require 'includes/config/database.php'; // Se hizo asi porque el require es relativo a donde se esté incluyendo el anuncios.php, no a la hubicacion de anuncios.php
+// DB
 $db_connection = conectarDB();
 
 // Consultar la DB
@@ -26,6 +24,7 @@ if (!$result_set_property->num_rows) {
 }
 $row_property = mysqli_fetch_assoc($result_set_property);
 
+incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion contenido-centrado">

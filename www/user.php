@@ -3,7 +3,7 @@
 <?php
 
 // Importar la conexion a la DB
-require 'includes/config/database.php';
+require 'includes/app.php';
 $db_connection = conectarDB();
 
 // Crear email y password
