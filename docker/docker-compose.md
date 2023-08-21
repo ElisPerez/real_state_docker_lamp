@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.1'
 # Servicios
 services:
   # Servicio para la base de datos MySQL
@@ -13,9 +13,30 @@ services:
       MYSQL_DATABASE: ${DB_NAME} # Nombre de la base de datos
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Contraseña del usuario root
     volumes:
-      - ./docker/dump:/docker-entrypoint-initdb.d # Carga archivos SQL al iniciar
-      - ./docker/conf:/etc/mysql/conf.d # Carga configuraciones personalizadas
-      - ./docker/mysql:/var/lib/mysql # Persistencia de datos de MySQL
+      - ./dump:/docker-entrypoint-initdb.d # Carga archivos SQL en la inicialización
+      - ./conf:/etc/mysql/conf.d # Carga configuraciones personalizadas
+      - ./mysql:/var/lib/mysql # Persistencia de datos de MySQL
+    networks:
+      - my_network # Conecta este servicio a la red personalizada my_network
+
+  # NodeJS. Nota: en image podria ser tambien node:lts para que descargue la ultima version LTS (a la fecha de hoy 20 August 2023 la LTS es 18.17.1 pero si se elige la node:lts irá cambiando la version automaticamente a la ultima LTS disponible)
+  node:
+    image: node:18.17.1
+    container_name: node
+    volumes:
+      - ./www:/var/www/html # Monta el directorio de la aplicación en el contenedor de Node.js
+    working_dir: /var/www/html # Establece el directorio de trabajo en el contenedor
+    networks:
+      - my_network # Conecta este servicio a la red personalizada my_network
+
+  # Composer
+  composervice:
+    image: composer:2.5.8
+    container_name: composer
+    volumes:
+      - ./www:/var/www/html # Monta el directorio de la aplicación en el contenedor de Composer
+    working_dir: /var/www/html # Establece el directorio de trabajo en el contenedor
+    command: update # Comando que se ejecutará al iniciar el contenedor (composer update)
     networks:
       - my_network # Conecta este servicio a la red personalizada my_network
 
@@ -27,12 +48,9 @@ services:
     ports:
       - '80:80' # Mapea el puerto 80 del host al puerto 80 del contenedor
     volumes:
-      - .:/var/www/html # Monta la aplicación web en el directorio del contenedor
+      - ./www:/var/www/html # Monta la aplicación web en el directorio del contenedor
     networks:
       - my_network # Conecta este servicio a la red personalizada my_network
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
 
   # Servicio para phpMyAdmin
   phpmyadmin:

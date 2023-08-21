@@ -65,6 +65,10 @@
   - Parámetros:
     - `-a`: incluye los detenidos.
 
+## Mostrar containers inactivos:
+
+- `docker ps -a -f "status=exited"`: --filter se abrevia con solo -f
+
 - `docker container rm <contenedor>`
   Elimina uno o más contenedores.
 

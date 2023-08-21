@@ -1,15 +1,18 @@
-mysql
-www/build
-www/build/*
-www/node_modules
-www/node_modules/*
-www/package-lock.json
-www/vendor
-www/vendor/*
+docker/mysql
+build
+build/*
+node_modules
+node_modules/*
+package-lock.json
+vendor
+vendor/*
+yarn.lock
+composer.lock
 
 .env
 .# Editor directories and files
 .vscode/*
+.vscode/settings.json
 !.vscode/extensions.json
 .idea
 
