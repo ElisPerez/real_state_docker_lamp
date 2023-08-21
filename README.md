@@ -85,9 +85,13 @@ Clone YourProject on `www/` and then, open web [http://127.0.0.1/YourProject](ht
 
 - `docker ps -a -f "status=exited"`: --filter se abrevia con solo -f
 
+# Eliminar CACHE de BUILDS anteriores en Docker:
+
+-`docker builder prune`
+
 ### Infrastructure model
 
-![Infrastructure model](.infragenie/infrastructure_model.png)
+![Infrastructure model](/docker/.infragenie/infrastructure_model.png)
 
 ## dump directory
 

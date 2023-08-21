@@ -48,7 +48,7 @@
 - `docker image pull <imagen>`
   Descarga una imagen desde un registro.
 
-- `docker image ls`
+- `docker image ls` o `docker images`:
   Lista imágenes en tu sistema.
 
 - `docker image rm <imagen>`
@@ -154,3 +154,11 @@
 
 - `docker inspect <objeto>`
   Muestra información detallada sobre un objeto Docker (imagen, contenedor, volumen, red, etc.)
+
+# Limpieza general
+
+- `docker system prune`: Limpia recursos no utilizados, como imágenes no utilizadas, contenedores detenidos, redes no utilizadas y volúmenes sin usar. Puede liberar espacio en disco y mantener el entorno de Docker más limpio.
+  - Parametros adicionales:
+    - `--all`: Esta variante del comando docker system prune elimina más tipos de recursos, incluyendo networks, volumes y build cache. Es más agresiva en la limpieza.
+
+- `docker builder prune`: Limpia componentes de construcción, incluyendo imágenes intermedias y caches de construcción, liberando espacio y manteniendo un entorno más ordenado.
