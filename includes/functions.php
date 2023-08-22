@@ -7,15 +7,24 @@ function incluirTemplate(string $nombre, bool $inicio = false)
   include TEMPLATES_URL . "/${nombre}.php";
 }
 
-function isAuthenticated(): bool
+function isAuthenticated(): void
 {
   // SESION DEL USER
   session_start();
 
-  $auth = $_SESSION['login'];
-
-  if ($auth) {
-    return true;
+  if ($_SESSION['login'] && basename($_SERVER['PHP_SELF']) === 'login.php') {
+    header('location: /admin');
   }
-  return false;
+
+  if (!$_SESSION['login'] && basename($_SERVER['PHP_SELF']) !== 'login.php') {
+    header('location: /login.php');
+  }
+}
+
+function debugging($variable)
+{
+  echo '<pre>';
+  echo var_dump($variable);
+  echo '</pre>';
+  exit;
 }

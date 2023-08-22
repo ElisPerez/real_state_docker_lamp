@@ -9,7 +9,7 @@ if (!$id) {
 require 'includes/app.php';
 
 // DB
-$db_connection = conectarDB();
+$db_connection = connectDB();
 
 // Consultar la DB
 $query_property = "SELECT * FROM properties WHERE id = ${id};";

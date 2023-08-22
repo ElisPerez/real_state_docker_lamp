@@ -4,7 +4,7 @@
 
 // Importar la conexion a la DB
 require 'includes/app.php';
-$db_connection = conectarDB();
+$db_connection = connectDB();
 
 // Crear email y password
 $email    = 'correo@correo.com';

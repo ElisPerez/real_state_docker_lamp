@@ -3,11 +3,7 @@
 require '../../includes/functions.php';
 
 // SESION DEL USER
-$auth = isAuthenticated();
-
-if (!$auth) {
-  header('location: /login.php');
-}
+isAuthenticated();
 
 // Validar Url por Id válido
 $id = $_GET["id"];
@@ -19,7 +15,7 @@ if (!$id) {
 
 // DataBase
 require "../../includes/config/database.php";
-$db_connect = conectarDB();
+$db_connect = connectDB();
 
 // Consulta para obtener la propiedad a actualizar
 $query_property = "SELECT * FROM properties WHERE id = ${id};";
@@ -171,7 +167,7 @@ incluirTemplate('header');
       <div class="p-relative">
         <textarea name="description" id="description"><?php echo $description; ?></textarea>
         <div class="char-counter">
-          <span class="char-count" id="charCount">0</span> / 250 caracteres
+          <span class="char-count" id="charCount">0</span> / 1200 caracteres
         </div>
       </div>
     </fieldset>

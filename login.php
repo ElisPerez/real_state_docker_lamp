@@ -2,14 +2,10 @@
 require 'includes/app.php';
 
 // Database
-$db_connection = conectarDB();
+$db_connection = connectDB();
 
 // SESION DEL USER
-$auth = isAuthenticated();
-
-if ($auth) {
-  header('location: /admin');
-}
+isAuthenticated();
 
 // Errores
 $errors = [];

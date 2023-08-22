@@ -1,24 +1,21 @@
 <?php
 // Functions
-require '../../includes/functions.php';
+require '../../includes/app.php';
+
+use App\Property;
 
 // SESION DEL USER
-$auth = isAuthenticated();
-
-if (!$auth) {
-  header('location: /login.php');
-}
+isAuthenticated();
 
 // DataBase
-require "../../includes/config/database.php";
-$db_connect = conectarDB();
+$db_connect = connectDB();
 
 // Consultar para obtener los vendedores
 $query_sellers = "SELECT * FROM sellers;";
 $response_sellers = mysqli_query($db_connect, $query_sellers);
 
 // Array con mensajes de errores
-$errors = [];
+$errors = Property::getErrors(); // Accede a un metodo static de la clase Property que al ser static no hay necesidad de instanciar la clase.
 
 $title       = '';
 $price       = '';
@@ -27,72 +24,22 @@ $description = '';
 $rooms       = '';
 $wc          = '';
 $parking_lot = '';
-$seller_id   = '';
 $create_at   = date('Y/m/d');
+$seller_id   = '';
 
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  // echo "<pre>";
-  // echo var_dump($_FILES);
-  // echo "</pre>";
+  $property = new Property($_POST);
 
-  // exit;
-
-  $title       = mysqli_real_escape_string($db_connect, $_POST["title"]);
-  $price       = mysqli_real_escape_string($db_connect, $_POST["price"]);
-  $image       = mysqli_real_escape_string($db_connect, $_POST["image"]);
-  $description = mysqli_real_escape_string($db_connect, $_POST["description"]);
-  $rooms       = mysqli_real_escape_string($db_connect, $_POST["rooms"]);
-  $wc          = mysqli_real_escape_string($db_connect, $_POST["wc"]);
-  $parking_lot = mysqli_real_escape_string($db_connect, $_POST["parking_lot"]);
-  $seller_id   = mysqli_real_escape_string($db_connect, $_POST["seller_id"]);
-  // $seller_id   = $_POST["seller_id"] ?? '';
-  // $seller_id   = !empty($_POST["seller_id"]) ? $_POST["seller_id"] : '';
-
-  // Asignar $_Files a una variable
-  $image = $_FILES["image"];
-
-  if (!$title) {
-    // Agregar elementos a un array
-    $errors[] = "Debes añadir un título";
-  }
-
-  if (!$price) {
-    $errors[] = "El precio es obligatorio";
-  }
-
-  if (strlen($description) < 50) {
-    $errors[] = "La descripción es obligatoria y debe tener al menos 50 carácteres";
-  }
-
-  if (!$rooms) {
-    $errors[] = 'Habitaciones es obligatorio';
-  }
-
-  if (!$wc) {
-    $errors[] = 'Baños es obligatorio';
-  }
-
-  if (!$parking_lot) {
-    $errors[] = 'Estacionamiento es obligatorio';
-  }
-
-  if (!$seller_id) {
-    $errors[] = 'Vendedor es obligatorio';
-  }
-
-  if (!$image["name"]) {
-    $errors[] = 'La imagen es obligatoria';
-  }
-
-  // Validar por tamaño (1Mb max)
-  $medida = 1000 * 1000;
-  if ($image["size"] > $medida || $image["error"]) {
-    $errors[] = 'La imagen es muy pesada';
-  }
+  $errors = $property->validate();
 
   // Revisar que el array de errors esté vacío
   if (empty($errors)) {
+    // Save to DB
+    $property->create();
+
+    // Asignar $_Files a una variable
+    $image = $_FILES["image"];
     /** SUBIDA DE ARCHIVOS */
 
     // Crear carpeta
@@ -112,8 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Subir la imagen al servidor local
     move_uploaded_file($image["tmp_name"], $folderImages . $imageName);
 
-    // Insertar en la base de datos
-    $query = "INSERT INTO properties (title, price, image, description, rooms, wc, parking_lot, create_at, seller_id) VALUES ('$title', '$price', '$imageName', '$description', '$rooms', '$wc', '$parking_lot', '$create_at', '$seller_id');";
+
 
     $result = mysqli_query($db_connect, $query);
 
@@ -155,7 +101,7 @@ incluirTemplate('header');
       <div class="p-relative">
         <textarea name="description" id="description"><?php echo $description; ?></textarea>
         <div class="char-counter">
-          <span class="char-count" id="charCount">0</span> / 250 caracteres
+          <span class="char-count" id="charCount">0</span> / 1200 caracteres
         </div>
       </div>
     </fieldset>

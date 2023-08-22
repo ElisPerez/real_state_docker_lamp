@@ -61,7 +61,7 @@ function charCounterHandler() {
   charCount.textContent = initialCount;
 
   // Adding class to the count if exceeding the limit
-  if (initialCount < 50 || initialCount > 250) {
+  if (initialCount < 50) {
     charCount.classList.add('char-count');
   } else {
     charCount.classList.remove('char-count');
@@ -71,7 +71,7 @@ function charCounterHandler() {
     const currentCount = textarea.value.length;
     charCount.textContent = currentCount;
 
-    if (currentCount < 50 || currentCount > 250) {
+    if (currentCount < 50) {
       charCount.classList.add('char-count');
     } else {
       charCount.classList.remove('char-count');

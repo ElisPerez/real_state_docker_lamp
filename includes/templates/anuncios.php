@@ -1,5 +1,5 @@
 <?php
-$db_connection = conectarDB();
+$db_connection = connectDB();
 
 // Consultar la DB
 $query_properties = "SELECT * FROM properties LIMIT ${limit};";

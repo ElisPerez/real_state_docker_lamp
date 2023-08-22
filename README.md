@@ -46,13 +46,17 @@ Delete all (Containers, volumes and Images):
 docker compose down --volumes --rmi all
 ```
 
+# Eliminar CACHE de BUILDS anteriores en Docker:
+
+- `docker builder prune`
+
+# Eliminar CACHE de TODO:
+
+- `docker system prune`:
+
 Open phpmyadmin at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 Open web browser with yout project at [http://127.0.0.1:80](http://127.0.0.1:80)
-
-## Multiple projects:
-
-Clone YourProject on `www/` and then, open web [http://127.0.0.1/YourProject](http://127.0.0.1/YourProject)
 
 ## Run MySQL client:
 
@@ -84,10 +88,6 @@ Clone YourProject on `www/` and then, open web [http://127.0.0.1/YourProject](ht
 ## Mostrar containers inactivos:
 
 - `docker ps -a -f "status=exited"`: --filter se abrevia con solo -f
-
-# Eliminar CACHE de BUILDS anteriores en Docker:
-
--`docker builder prune`
 
 ### Infrastructure model
 

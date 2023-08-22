@@ -2,16 +2,11 @@
 require '../includes/functions.php';
 
 // SESION DEL USER
-$auth = isAuthenticated();
-
-if (!$auth) {
-  header('location: /login.php');
-}
-
+isAuthenticated();
 
 // Importar la conexión a la database
 require '../includes/config/database.php';
-$db_connection = conectarDB();
+$db_connection = connectDB();
 
 // Escribir el query
 $query = "SELECT * FROM properties;";

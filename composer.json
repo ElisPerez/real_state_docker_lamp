@@ -1,6 +1,7 @@
 {
   "name": "leader/realstate",
   "description": "Proyecto con POO",
+  "type": "project",
   "authors": [
     {
       "name": "Leader",
