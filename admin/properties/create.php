@@ -1,11 +1,13 @@
 <?php
 // Functions
 require '../../includes/app.php';
-
 use App\Property;
 
 // SESION DEL USER
 isAuthenticated();
+
+// Import InterventionImage
+use Intervention\Image\ImageManagerStatic as InterImage;
 
 // DataBase
 $db_connect = connectDB();
@@ -29,42 +31,45 @@ $seller_id   = '';
 
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $property = new Property($_POST);
+  // Create new instance
+  $property = new Property($_POST); // Se le pasa al constructor de la class Property
+  // Asignar $_Files a una variable
+  $imageArray = $_FILES['image'];
 
+  // Obtener la extension
+  $extension = pathinfo($imageArray['name'])['extension'];
+
+  // Generar un nombre único
+  $imageName = md5(uniqid(rand(), true)) . '.' . $extension;
+
+  /** SET IMAGE */
+  if ($imageArray['tmp_name']) {
+    // Resize a la imagen con InterventionImage to: Width 800px and Height 600
+    $img = InterImage::make($imageArray['tmp_name']);
+    $img->fit(800, 600);
+
+    // Setear el nombre único de la imagen al atributo $image de la instancia.
+    $property->setImage($imageName);
+  }
+
+  /** VALIDATE */
   $errors = $property->validate();
 
   // Revisar que el array de errors esté vacío
   if (empty($errors)) {
-    // Save to DB
-    $property->create();
-
-    // Asignar $_Files a una variable
-    $image = $_FILES["image"];
     /** SUBIDA DE ARCHIVOS */
-
-    // Crear carpeta
-    $folderImages = '../../images/';
-
-    // Verificar si ya existe la carpeta images
-    if (!is_dir($folderImages)) {
-      mkdir($folderImages);
+    // Verificar si ya existe la carpeta 'images' y sinó la crea
+    if (!is_dir(IMAGES_FOLDER)) {
+      mkdir(IMAGES_FOLDER);
     }
+    // Save image to server
+    $img->save(IMAGES_FOLDER . $imageName);
 
-    // Obtener la extension
-    $extension = pathinfo($image["name"])["extension"];
+    // Save to DB
+    $result_set = $property->create();
 
-    // Generar un nombre único
-    $imageName = md5(uniqid(rand(), true)) . "." . $extension;
-
-    // Subir la imagen al servidor local
-    move_uploaded_file($image["tmp_name"], $folderImages . $imageName);
-
-
-
-    $result = mysqli_query($db_connect, $query);
-
-    if ($result) {
-      // Redireccionar al usuario
+    // Redireccionar al usuario
+    if ($result_set) {
       header('Location: /admin?result=1');
     }
   }

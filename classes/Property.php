@@ -28,16 +28,16 @@ class Property
 
   public function __construct($args = [])
   {
-    $this->id = $args['id'] ?? '';
-    $this->title = $args['title'] ?? '';
-    $this->price = $args['price'] ?? 0;
-    $this->image = $args['image'] ?? 'image.jpg';
+    $this->id          = $args['id'] ?? '';
+    $this->title       = $args['title'] ?? '';
+    $this->price       = $args['price'] ?? '';
+    $this->image       = $args['image'] ?? '';
     $this->description = $args['description'] ?? '';
-    $this->rooms = $args['rooms'] ?? 0;
-    $this->wc = $args['wc'] ?? 0;
-    $this->parking_lot = $args['parking_lot'] ?? 0;
-    $this->create_at = date('Y/m/d');
-    $this->seller_id = $args['seller_id'] ?? '';
+    $this->rooms       = $args['rooms'] ?? '';
+    $this->wc          = $args['wc'] ?? '';
+    $this->parking_lot = $args['parking_lot'] ?? '';
+    $this->create_at   = date('Y/m/d');
+    $this->seller_id   = $args['seller_id'] ?? '';
   }
 
   // Definir la conexion a la DB
@@ -61,8 +61,7 @@ class Property
     $query .= "');";
 
     $result_set = self::$db->query($query);
-    // todo: retornar $result_set y quitar debugging(...)
-    debugging($result_set);
+    return $result_set;
   }
 
   // Identificar y unir los atributos de la DB
@@ -87,6 +86,16 @@ class Property
     }
 
     return $sanitized;
+  }
+
+  // Subida de archivos
+  public function setImage($image)
+  {
+
+    // Asignar al atributo $image el nombre de la imagen => 'myphoto.jpg'
+    if ($image) {
+      $this->image = $image;
+    }
   }
 
   // Validations
@@ -126,16 +135,9 @@ class Property
       self::$errors[] = 'Vendedor es obligatorio';
     }
 
-    // todo: validar imagenes
-    // if (!$this->image["name"]) {
-    //   self::$errors[] = 'La imagen es obligatoria';
-    // }
-
-    // // Validar por tamaño (1Mb max)
-    // $medida = 1000 * 1000;
-    // if ($this->image["size"] > $medida || $this->image["error"]) {
-    //   self::$errors[] = 'La imagen es muy pesada';
-    // }
+    if (!$this->image) {
+      self::$errors[] = 'La imagen es obligatoria';
+    }
 
     return self::$errors;
   }

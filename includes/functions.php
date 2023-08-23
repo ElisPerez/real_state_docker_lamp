@@ -1,6 +1,7 @@
 <?php
 define('TEMPLATES_URL', __DIR__ . '/templates');
 define('FUNCTIONS_URL', __DIR__ . '/functions.php');
+define('IMAGES_FOLDER', __DIR__ . '/../images/');
 
 function incluirTemplate(string $nombre, bool $inicio = false)
 {
