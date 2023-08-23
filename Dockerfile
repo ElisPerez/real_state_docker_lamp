@@ -12,7 +12,7 @@ RUN apt-get update \
 
 # Instala extensiones requeridas de PHP
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
-RUN docker-php-ext-install mysqli zip mbstring gd
+RUN docker-php-ext-install pdo_mysql exif pcntl bcmath mysqli zip mbstring gd
 
 # Install PHP extensions (otras para mas tarde)
 # RUN docker-php-ext-install pdo_mysql exif pcntl bcmath

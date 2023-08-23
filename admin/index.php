@@ -1,18 +1,14 @@
 <?php
-require '../includes/functions.php';
-
+require '../includes/app.php';
 // SESION DEL USER
 isAuthenticated();
+// Inport Property class
+use App\Property;
 
-// Importar la conexión a la database
-require '../includes/config/database.php';
-$db_connection = connectDB();
+// Implementar metodo para obtener todas las propiedades
+$properties = Property::all();
 
-// Escribir el query
-$query = "SELECT * FROM properties;";
-
-// Consultar la DB
-$properties = mysqli_query($db_connection, $query);
+debugging($properties);
 
 // Muestra mensaje condicional
 $result = $_GET["result"] ?? null;

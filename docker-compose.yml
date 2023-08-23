@@ -24,31 +24,10 @@ services:
     build: .
     container_name: www
     image: realstate:1.0 # Nombre y etiqueta de la imagen personalizada
-    # logging:
-      # driver: 'json-file' # Otra opción: "fluentd", "syslog", etc.
-      # options:
-        # max-size: '10m'
-        # max-file: '3'
     ports:
       - '80:80' # Mapea el puerto 80 del host al puerto 80 del contenedor
     volumes:
       - .:/var/www/html # Monta la aplicación web en el directorio del contenedor
-    networks:
-      - my_network # Conecta este servicio a la red personalizada my_network
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
-
-  # Servicio para phpMyAdmin
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2.1
-    container_name: phpmyadmin
-    ports:
-      - 8000:80 # Mapea el puerto 8000 del host al puerto 80 del contenedor
-    environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
       - my_network # Conecta este servicio a la red personalizada my_network
 

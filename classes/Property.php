@@ -141,4 +141,45 @@ class Property
 
     return self::$errors;
   }
+
+  // Lista todas las propiedades
+  public static function all()
+  {
+    $query = "SELECT * FROM properties";
+
+    $result_set = self::querySQL($query);
+
+    return $result_set;
+  }
+
+  public static function querySQL($query)
+  {
+    // Consultar la DB
+    $result_set = self::$db->query($query);
+
+    // Iterar los resultados
+    $array = [];
+    while ($row = $result_set->fetch_assoc()) {
+      $array[] = self::createObject($row);
+    }
+
+    // Liberar la memoria
+    $result_set->free();
+
+    // Retornar los resultados
+    return $array;
+  }
+
+  protected static function createObject($row)
+  {
+    $object = new self; // Crea una nueva instancia dentro de nuestra clase
+
+    foreach($row as $key => $value) {
+       if(property_exists($object, $key)) {
+        $object->$key = $value;
+       }
+    }
+
+    return $object;
+  }
 }
