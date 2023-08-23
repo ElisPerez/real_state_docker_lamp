@@ -8,8 +8,6 @@ use App\Property;
 // Implementar metodo para obtener todas las propiedades
 $properties = Property::all();
 
-debugging($properties);
-
 // Muestra mensaje condicional
 $result = $_GET["result"] ?? null;
 
@@ -65,24 +63,24 @@ incluirTemplate('header');
     </thead>
     <tbody>
       <!-- Mostrar los datos de la DB -->
-      <?php while ($row_property = mysqli_fetch_assoc($properties)) : ?>
+      <?php foreach ($properties as $property) : ?>
         <tr>
           <td>
-            <?php echo $row_property["id"]; ?>
+            <?php echo $property->id; ?>
           </td>
-          <td><?php echo $row_property["title"]; ?></td>
-          <td><img src="/images/<?php echo $row_property["image"]; ?>" alt="Casa en la playa" class="image-table" /></td>
-          <td>$<?php echo $row_property["price"]; ?></td>
+          <td><?php echo $property->title; ?></td>
+          <td><img src="/images/<?php echo $property->image; ?>" alt="Casa en la playa" class="image-table" /></td>
+          <td>$<?php echo $property->price; ?></td>
           <td>
-            <a href="properties/update.php?id=<?php echo $row_property["id"]; ?>" class="boton-amarillo-block">Actualizar</a>
+            <a href="properties/update.php?id=<?php echo $property->id; ?>" class="boton-amarillo-block">Actualizar</a>
 
             <form method="POST" class="w-100">
-              <input type="hidden" name="id" value="<?php echo $row_property["id"]; ?>" />
+              <input type="hidden" name="id" value="<?php echo $property->id; ?>" />
               <input type="submit" class="boton-rojo-block" value="Eliminar" />
             </form>
           </td>
         </tr>
-      <?php endwhile; ?>
+      <?php endforeach; ?>
     </tbody>
   </table>
 </main>

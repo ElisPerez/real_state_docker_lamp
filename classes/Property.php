@@ -37,7 +37,7 @@ class Property
     $this->wc          = $args['wc'] ?? '';
     $this->parking_lot = $args['parking_lot'] ?? '';
     $this->create_at   = date('Y/m/d');
-    $this->seller_id   = $args['seller_id'] ?? '';
+    $this->seller_id   = $args['seller_id'] ?? '1';
   }
 
   // Definir la conexion a la DB

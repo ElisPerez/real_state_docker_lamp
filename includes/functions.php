@@ -29,3 +29,11 @@ function debugging($variable)
   echo '</pre>';
   exit;
 }
+
+// Sanitizar/Escapar HTML
+function s($html): string
+{
+  $s = htmlspecialchars($html);
+
+  return $s;
+}
