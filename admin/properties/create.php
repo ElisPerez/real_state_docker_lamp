@@ -26,20 +26,20 @@ $errors = Property::getErrors(); // Accede a un metodo static de la clase Proper
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Create new instance
-  $property = new Property($_POST); // Se le pasa al constructor de la class Property
+  $property = new Property($_POST['property']); // Se le pasa al constructor de la class Property
   // Asignar $_Files a una variable
-  $imageArray = $_FILES['image'];
+  $imageArray = $_FILES['property'];
 
   // Obtener la extension
-  $extension = pathinfo($imageArray['name'])['extension'];
+  $extension = pathinfo($imageArray['name']['image'])['extension'];
 
   // Generar un nombre único
   $imageName = md5(uniqid(rand(), true)) . '.' . $extension;
 
   /** SET IMAGE */
-  if ($imageArray['tmp_name']) {
+  if ($imageArray['tmp_name']['image']) {
     // Resize a la imagen con InterventionImage to: Width 800px and Height 600
-    $img = InterImage::make($imageArray['tmp_name']);
+    $img = InterImage::make($imageArray['tmp_name']['image']);
     $img->fit(800, 600);
 
     // Setear el nombre único de la imagen al atributo $image de la instancia.
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $img->save(IMAGES_FOLDER . $imageName);
 
     // Save to DB
-    $result_set = $property->create();
+    $result_set = $property->save();
 
     // Redireccionar al usuario
     if ($result_set) {

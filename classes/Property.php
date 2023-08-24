@@ -46,6 +46,17 @@ class Property
     self::$db = $database;
   }
 
+  public function save()
+  {
+    if (isset($this->id)) {
+      // Actualizando
+      $this->update();
+    } else {
+      // Creando nuevo registro
+      $this->create();
+    }
+  }
+
   public function create()
   {
     // Sanitizar los datos
@@ -62,6 +73,30 @@ class Property
 
     $result_set = self::$db->query($query);
     return $result_set;
+  }
+
+  public function update()
+  {
+    // Sanitizar los datos
+    $attributes = $this->sanitizingData();
+
+    $values = [];
+
+    foreach ($attributes as $key => $value) {
+      $values[] = "{$key}='{$value}'";
+    }
+
+    $query  = "UPDATE properties SET ";
+    $query .= join(', ', $values);
+    $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+    $query .= " LIMIT 1 ";
+
+    $result_set = self::$db->query($query);
+
+    if ($result_set) {
+      // Redireccionar al usuario
+      header('Location: /admin?result=2');
+    }
   }
 
   // Identificar y unir los atributos de la DB
@@ -91,6 +126,14 @@ class Property
   // Subida de archivos
   public function setImage($image)
   {
+    // Elimina la imagen previa
+    if (isset($this->id)) {
+      // Comprobar si existe el archivo
+      $isExist = file_exists(IMAGES_FOLDER . $this->image);
+      if ($isExist) {
+        unlink(IMAGES_FOLDER . $this->image);
+      }
+    }
 
     // Asignar al atributo $image el nombre de la imagen => 'myphoto.jpg'
     if ($image) {
@@ -142,7 +185,7 @@ class Property
     return self::$errors;
   }
 
-  // Lista todas las propiedades
+  // Lista todos los registros
   public static function all()
   {
     $query = "SELECT * FROM properties";
@@ -150,6 +193,14 @@ class Property
     $result_set = self::querySQL($query);
 
     return $result_set;
+  }
+
+  // Obtener registro por id
+  public static function find($id)
+  {
+    $query = "SELECT * FROM properties WHERE id = ${id}";
+    $result_set = self::querySQL($query);
+    return array_shift($result_set);
   }
 
   public static function querySQL($query)
@@ -174,12 +225,22 @@ class Property
   {
     $object = new self; // Crea una nueva instancia dentro de nuestra clase
 
-    foreach($row as $key => $value) {
-       if(property_exists($object, $key)) {
+    foreach ($row as $key => $value) {
+      if (property_exists($object, $key)) {
         $object->$key = $value;
-       }
+      }
     }
 
     return $object;
+  }
+
+  // Sincronizar el objeto en memoria con los datos que está haciendo el usuario
+  public function synchronize($args = [])
+  {
+    foreach ($args as $key => $value) {
+      if (property_exists($this, $key) && !is_null($value)) {
+        $this->$key = $value;
+      }
+    }
   }
 }
