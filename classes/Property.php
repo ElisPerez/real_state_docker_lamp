@@ -28,7 +28,7 @@ class Property
 
   public function __construct($args = [])
   {
-    $this->id          = $args['id'] ?? '';
+    $this->id          = $args['id'] ?? null;
     $this->title       = $args['title'] ?? '';
     $this->price       = $args['price'] ?? '';
     $this->image       = $args['image'] ?? '';
@@ -48,7 +48,7 @@ class Property
 
   public function save()
   {
-    if (isset($this->id)) {
+    if (!is_null($this->id)) {
       // Actualizando
       $this->update();
     } else {
@@ -72,7 +72,10 @@ class Property
     $query .= "');";
 
     $result_set = self::$db->query($query);
-    return $result_set;
+    // Redireccionar al usuario
+    if ($result_set) {
+      header('Location: /admin?result=1');
+    }
   }
 
   public function update()
@@ -96,6 +99,19 @@ class Property
     if ($result_set) {
       // Redireccionar al usuario
       header('Location: /admin?result=2');
+    }
+  }
+
+  // Eliminar registro en DB
+  public function delete()
+  {
+    $query = "DELETE FROM properties WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+    $result_set = self::$db->query($query);
+
+    if ($result_set) {
+      $this->deleteImage();
+
+      header('location: /admin?result=3');
     }
   }
 
@@ -127,17 +143,23 @@ class Property
   public function setImage($image)
   {
     // Elimina la imagen previa
-    if (isset($this->id)) {
-      // Comprobar si existe el archivo
-      $isExist = file_exists(IMAGES_FOLDER . $this->image);
-      if ($isExist) {
-        unlink(IMAGES_FOLDER . $this->image);
-      }
+    if (!is_null($this->id)) {
+      $this->deleteImage();
     }
 
     // Asignar al atributo $image el nombre de la imagen => 'myphoto.jpg'
     if ($image) {
       $this->image = $image;
+    }
+  }
+
+  // Eliminar archivo
+  public function deleteImage()
+  {
+    // Comprobar si existe el archivo
+    $isExist = file_exists(IMAGES_FOLDER . $this->image);
+    if ($isExist) {
+      unlink(IMAGES_FOLDER . $this->image);
     }
   }
 

@@ -3,56 +3,42 @@
 require '../../includes/app.php';
 
 use App\Property;
+// Import InterventionImage
+use Intervention\Image\ImageManagerStatic as InterImage;
 
 // SESION DEL USER
 isAuthenticated();
 
-// Import InterventionImage
-use Intervention\Image\ImageManagerStatic as InterImage;
-
-// DataBase
-$db_connect = connectDB();
-
 $property = new Property;
-
-// Consultar para obtener los vendedores
-$query_sellers = "SELECT * FROM sellers;";
-$response_sellers = mysqli_query($db_connect, $query_sellers);
 
 // Array con mensajes de errores
 $errors = Property::getErrors(); // Accede a un metodo static de la clase Property que al ser static no hay necesidad de instanciar la clase.
 
-
 // Ejecutar el formulario después de que el usuario envía el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Create new instance
-  $property = new Property($_POST['property']); // Se le pasa al constructor de la class Property
-  // Asignar $_Files a una variable
+  $property = new Property($_POST['property']);
   $imageArray = $_FILES['property'];
 
-  // Obtener la extension
-  $extension = pathinfo($imageArray['name']['image'])['extension'];
-
-  // Generar un nombre único
-  $imageName = md5(uniqid(rand(), true)) . '.' . $extension;
-
-  /** SET IMAGE */
   if ($imageArray['tmp_name']['image']) {
+    // Obtener la extension
+    $extension = pathinfo($imageArray['name']['image'])['extension'];
+    // Generar un nombre único
+    $imageName = md5(uniqid(rand(), true)) . '.' . $extension;
     // Resize a la imagen con InterventionImage to: Width 800px and Height 600
     $img = InterImage::make($imageArray['tmp_name']['image']);
     $img->fit(800, 600);
 
-    // Setear el nombre único de la imagen al atributo $image de la instancia.
+    // Setear el nombre único de la imagen al atributo $image de la instancia en memoria.
     $property->setImage($imageName);
   }
-
   /** VALIDATE */
   $errors = $property->validate();
 
   // Revisar que el array de errors esté vacío
   if (empty($errors)) {
     /** SUBIDA DE ARCHIVOS */
-    // Verificar si ya existe la carpeta 'images' y sinó la crea
+    // Verificar si ya existe la carpeta 'images' y sinó crearla
     if (!is_dir(IMAGES_FOLDER)) {
       mkdir(IMAGES_FOLDER);
     }
@@ -60,12 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $img->save(IMAGES_FOLDER . $imageName);
 
     // Save to DB
-    $result_set = $property->save();
-
-    // Redireccionar al usuario
-    if ($result_set) {
-      header('Location: /admin?result=1');
-    }
+    $property->save();
   }
 }
 

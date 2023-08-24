@@ -17,21 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
   $id = filter_var($id,  FILTER_VALIDATE_INT);
 
   if ($id) {
-    // Obtener nombre de la imagen a eliminar
-    $query_image = "SELECT image FROM properties WHERE id = ${id};";
-    $result_set_image = mysqli_query($db_connection, $query_image);
-    $row_image = mysqli_fetch_assoc($result_set_image); // Como estoy llamando una sola vez a mysqli_fetch_assoc solo devuelve la primera fila de la tabla.
-
-    $image_path_to_delete = '../images/' . $row_image["image"];
-    unlink($image_path_to_delete);
-
-    // Eliminar la propiedad de la DB
-    $query_delete_property = "DELETE FROM properties WHERE id = ${id};";
-    $result_delete_property = mysqli_query($db_connection, $query_delete_property);
-
-    if ($result_delete_property) {
-      header('location: /admin?result=3');
-    }
+    $property = Property::find($id);
+    $property->delete();
   }
 }
 
