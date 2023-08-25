@@ -40,15 +40,15 @@ incluirTemplate('header');
 <main class="contenedor seccion">
   <h1>Administrador de Bienes Raices</h1>
   <?php if (intval($result) === 1) : ?>
-    <p class="alert success">Anuncio Creado Correctamente</p>
+    <p class="alert success">Creado Correctamente</p>
   <?php elseif (intval($result) === 2) : ?>
-    <p class="alert success">Anuncio Actualizado Correctamente</p>
+    <p class="alert success">Actualizado Correctamente</p>
   <?php elseif (intval($result) === 3) : ?>
-    <p class="alert success">Anuncio Eliminado Correctamente</p>
+    <p class="alert success">Eliminado Correctamente</p>
   <?php endif; ?>
 
-  <a href="/admin/properties/create.php" class="boton boton-blue">Nueva Propiedad</a>
-  <a href="/admin/sellers/create.php" class="boton boton-purple">Nuevo(a) Vendedor</a>
+  <a href="/admin/properties/create.php" class="boton boton-primary">Nueva Propiedad</a>
+  <a href="/admin/sellers/create.php" class="boton boton-secondary">Nuevo(a) Vendedor</a>
 
   <h2>Propiedades</h2>
 
@@ -73,12 +73,12 @@ incluirTemplate('header');
           <td><img src="/images/<?php echo $property->image; ?>" alt="Casa en la playa" class="image-table" /></td>
           <td>$<?php echo $property->price; ?></td>
           <td>
-            <a href="/admin/properties/update.php?id=<?php echo $property->id; ?>" class="boton-purple-block">Actualizar</a>
+            <a href="/admin/properties/update.php?id=<?php echo $property->id; ?>" class="boton-secondary-block">Actualizar</a>
 
             <form method="POST" class="w-100">
               <input type="hidden" name="id" value="<?php echo $property->id; ?>" />
               <input type="hidden" name="type" value="property" />
-              <input type="submit" class="boton-red-block" value="Eliminar" />
+              <input type="submit" class="boton-error-block" value="Eliminar" />
             </form>
           </td>
         </tr>
@@ -105,12 +105,12 @@ incluirTemplate('header');
           <td><?php echo $seller->first_name . " " . $seller->last_name; ?></td>
           <td><?php echo $seller->phone; ?></td>
           <td>
-            <a href="/admin/sellers/update.php?id=<?php echo $seller->id; ?>" class="boton-purple-block">Actualizar</a>
+            <a href="/admin/sellers/update.php?id=<?php echo $seller->id; ?>" class="boton-secondary-block">Actualizar</a>
 
             <form method="POST" class="w-100">
               <input type="hidden" name="id" value="<?php echo $seller->id; ?>" />
               <input type="hidden" name="type" value="seller" />
-              <input type="submit" class="boton-red-block" value="Eliminar" />
+              <input type="submit" class="boton-error-block" value="Eliminar" />
             </form>
           </td>
         </tr>

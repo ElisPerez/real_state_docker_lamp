@@ -20,7 +20,7 @@ incluirTemplate('header');
 <main class="contenedor seccion">
   <h1>Actualizar Vendedor(a)</h1>
 
-  <a href="/admin" class="boton boton-purple">Volver</a>
+  <a href="/admin" class="boton boton-secondary">Volver</a>
 
   <?php foreach ($errors as $error) : ?>
 
@@ -34,7 +34,7 @@ incluirTemplate('header');
 
     <?php include '../../includes/templates/form_sellers.php'; ?>
 
-    <input type="submit" value="Guardar Cambios" class="boton boton-purple" />
+    <input type="submit" value="Guardar Cambios" class="boton boton-secondary" />
   </form>
 </main>
 

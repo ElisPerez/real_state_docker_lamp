@@ -11,6 +11,16 @@ $seller = new Seller;
 $errors = Seller::getErrors();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Crear instancia
+  $seller = new Seller($_POST['seller']);
+
+  // Validar que no haya campos vacíos
+  $errors = $seller->validate();
+
+  // Si no hay errores
+  if (empty($errors)) {
+    $seller->save();
+  }
 }
 
 incluirTemplate('header');
@@ -20,7 +30,7 @@ incluirTemplate('header');
 <main class="contenedor seccion">
   <h1>Registrar Vendedor(a)</h1>
 
-  <a href="/admin" class="boton boton-purple">Volver</a>
+  <a href="/admin" class="boton boton-secondary">Volver</a>
 
   <?php foreach ($errors as $error) : ?>
 
@@ -34,7 +44,7 @@ incluirTemplate('header');
 
     <?php include '../../includes/templates/form_sellers.php'; ?>
 
-    <input type="submit" value="Registrar Vendedor(a)" class="boton boton-purple" />
+    <input type="submit" value="Registrar Vendedor(a)" class="boton boton-secondary" />
   </form>
 </main>
 

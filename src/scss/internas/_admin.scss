@@ -7,11 +7,11 @@
   margin: 1rem 0;
   // cuando estan en el mismo nivel se coloca el ampersand (&)
   &.error {
-    background-color: $red;
+    background-color: $error;
   }
 
   &.success {
-    background-color: $blue;
+    background-color: $primary;
   }
 }
 
@@ -28,7 +28,7 @@
 }
 
 .char-count {
-  color: $red;
+  color: $error;
 }
 
 table.properties {
@@ -37,7 +37,7 @@ table.properties {
   border-spacing: 0;
 
   thead {
-    background-color: $blue;
+    background-color: $primary;
 
     th {
       color: $white;

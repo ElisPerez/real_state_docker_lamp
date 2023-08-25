@@ -60,7 +60,7 @@ incluirTemplate('header');
 <main class="contenedor seccion">
   <h1>Crear</h1>
 
-  <a href="/admin" class="boton boton-blue">Volver</a>
+  <a href="/admin" class="boton boton-primary">Volver</a>
 
   <?php foreach ($errors as $error) : ?>
 
@@ -74,7 +74,7 @@ incluirTemplate('header');
 
     <?php include '../../includes/templates/form_properties.php'; ?>
 
-    <input type="submit" value="Crear Propiedad" class="boton boton-blue" />
+    <input type="submit" value="Crear Propiedad" class="boton boton-primary" />
   </form>
 </main>
 

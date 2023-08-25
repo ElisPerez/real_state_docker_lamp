@@ -1,20 +1,20 @@
-.boton-purple {
-  @include boton($purple, inline-block);
+.boton-secondary {
+  @include boton($secondary, inline-block);
 }
 
-.boton-purple-block {
-  @include boton($purple, block);
+.boton-secondary-block {
+  @include boton($secondary, block);
 }
 
-.boton-blue {
-  @include boton($blue, inline-block);
+.boton-primary {
+  @include boton($primary, inline-block);
 }
 
-.boton-blue-block {
-  @include boton($blue, block);
+.boton-primary-block {
+  @include boton($primary, block);
 }
 
-.boton-red-block {
-  @include boton($red, block);
+.boton-error-block {
+  @include boton($error, block);
   width: 100%;
 }
