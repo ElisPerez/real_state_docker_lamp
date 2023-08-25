@@ -50,7 +50,7 @@ incluirTemplate('header', true);
   ?>
 
   <div class="alinear-derecha">
-    <a href="anuncios.php" class="boton-verde">Ver todas</a>
+    <a href="anuncios.php" class="boton-blue">Ver todas</a>
   </div>
 </section>
 
@@ -60,7 +60,7 @@ incluirTemplate('header', true);
     Llena el formulario de contacto y un asesor se comunicará contigo a la
     brevedad
   </p>
-  <a href="contacto.html" class="boton-amarillo">Contáctanos</a>
+  <a href="contacto.html" class="boton-purple">Contáctanos</a>
 </section>
 
 <div class="contenedor seccion seccion-inferior">

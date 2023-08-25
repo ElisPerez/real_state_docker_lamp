@@ -68,7 +68,7 @@ incluirTemplate('header');
       <input type="time" name="hora" id="hora" min="09:00" max="18:00" />
     </fieldset>
 
-    <input type="submit" value="Enviar" class="boton-verde" />
+    <input type="submit" value="Enviar" class="boton-blue" />
   </form>
 </main>
 

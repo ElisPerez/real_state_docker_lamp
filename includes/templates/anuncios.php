@@ -35,7 +35,7 @@ $result_set_properties = mysqli_query($db_connection, $query_properties);
           </li>
         </ul>
 
-        <a href="anuncio.php?id=<?php echo $row_property['id']; ?>" class="boton-amarillo-block">
+        <a href="anuncio.php?id=<?php echo $row_property['id']; ?>" class="boton-purple-block">
           Ver propiedad
         </a>
       </div>

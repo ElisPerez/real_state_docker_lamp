@@ -7,7 +7,7 @@
 }
 
 .header {
-  background-color: $grisOscuro;
+  background-color: $darkGray;
   padding: 1rem 0 3rem 0;
 
   &.inicio {
@@ -33,7 +33,7 @@
 
   h1 {
     text-align: left;
-    color: $blanco;
+    color: $white;
     font-weight: $bold;
     line-height: 2;
     max-width: 60rem;
