@@ -14,6 +14,10 @@ class ActiveRecord
   // Validations Errors
   protected static $errors = [];
 
+  // Atributos (Se deben deblarar explicitamente para evitar errores de la extension)
+  public $id;
+  public $image;
+
   // Definir la conexion a la DB
   public static function setDB($database)
   {

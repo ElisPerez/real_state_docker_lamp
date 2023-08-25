@@ -5,12 +5,32 @@ use App\Seller;
 
 isAuthenticated();
 
-$seller = new Seller;
+// Validar ID
+$id = $_GET['id'];
+$id = filter_var($id, FILTER_VALIDATE_INT);
+
+if (!$id) {
+  header('location: /admin');
+}
+
+// Obtener vendedor desde DB
+$seller = Seller::find($id);
 
 // Array con mensajes de errores
 $errors = Seller::getErrors();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Asignar los valores
+  $args = $_POST['seller'];
+  // Sincronizar objeto en memoria con los datos que escribio el usuario
+  $seller->synchronize($args);
+  // Validación
+  $errors = $seller->validate();
+
+  if (empty($errors)) {
+    // Guardar en DB
+    $seller->save();
+  }
 }
 
 incluirTemplate('header');

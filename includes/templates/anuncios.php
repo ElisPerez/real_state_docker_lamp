@@ -1,50 +1,40 @@
 <?php
-$db_connection = connectDB();
+use App\Property;
 
-// Consultar la DB
-$query_properties = "SELECT * FROM properties LIMIT ${limit};";
-
-// Obtener resultados
-$result_set_properties = mysqli_query($db_connection, $query_properties);
+$properties = Property::all();
 ?>
 
 <div class="contenedor-anuncios">
-  <?php while ($row_property = mysqli_fetch_assoc($result_set_properties)) : ?>
+  <?php foreach ($properties as $property) { ?>
     <div class="anuncio">
 
-      <img loading="lazy" src="/images/<?php echo $row_property['image']; ?>" alt="<?php echo $row_property['title']; ?>" />
-
+      <img loading="lazy" src="/images/<?php echo $property->image; ?>" alt="<?php echo $property->title; ?>" />
 
       <div class="contenido-anuncio">
-        <h3><?php echo $row_property['title']; ?></h3>
-        <p><?php echo $row_property['description']; ?></p>
-        <p class="precio">$ <?php echo $row_property['price']; ?></p>
+        <h3><?php echo $property->title; ?></h3>
+        <p><?php echo $property->description; ?></p>
+        <p class="precio">$ <?php echo $property->price; ?></p>
 
         <ul class="iconos-caracteristicas">
           <li>
             <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="Icono WC" />
-            <p><?php echo $row_property['wc']; ?></p>
+            <p><?php echo $property->wc; ?></p>
           </li>
           <li>
             <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="Icono Estacionamiento" />
-            <p><?php echo $row_property['parking_lot']; ?></p>
+            <p><?php echo $property->parking_lot; ?></p>
           </li>
           <li>
             <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="Icono Habitaciones" />
-            <p><?php echo $row_property['rooms']; ?></p>
+            <p><?php echo $property->rooms; ?></p>
           </li>
         </ul>
 
-        <a href="anuncio.php?id=<?php echo $row_property['id']; ?>" class="boton-secondary-block">
+        <a href="anuncio.php?id=<?php echo $property->id; ?>" class="boton-secondary-block">
           Ver propiedad
         </a>
       </div>
 
     </div>
-  <?php endwhile; ?>
+  <?php } ?>
 </div>
-
-<?php
-// Cerrar conexion de la DB
-mysqli_close($db_connection);
-?>

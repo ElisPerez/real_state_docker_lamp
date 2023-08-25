@@ -15,6 +15,7 @@ $result = $_GET["result"] ?? null;
 
 // Eliminar una property
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+  // Validar ID
   $id = $_POST["id"];
   $id = filter_var($id,  FILTER_VALIDATE_INT);
 
@@ -39,13 +40,12 @@ incluirTemplate('header');
 
 <main class="contenedor seccion">
   <h1>Administrador de Bienes Raices</h1>
-  <?php if (intval($result) === 1) : ?>
-    <p class="alert success">Creado Correctamente</p>
-  <?php elseif (intval($result) === 2) : ?>
-    <p class="alert success">Actualizado Correctamente</p>
-  <?php elseif (intval($result) === 3) : ?>
-    <p class="alert success">Eliminado Correctamente</p>
-  <?php endif; ?>
+  <?php
+  $message = showNotification(intval($result));
+
+  if ($message) { ?>
+    <p class="alert success"><?php echo s($message); ?></p>
+  <?php } ?>
 
   <a href="/admin/properties/create.php" class="boton boton-primary">Nueva Propiedad</a>
   <a href="/admin/sellers/create.php" class="boton boton-secondary">Nuevo(a) Vendedor</a>
