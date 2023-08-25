@@ -3,6 +3,7 @@
 require '../../includes/app.php';
 
 use App\Property;
+use App\Seller;
 // Import InterventionImage
 use Intervention\Image\ImageManagerStatic as InterImage;
 
@@ -10,6 +11,9 @@ use Intervention\Image\ImageManagerStatic as InterImage;
 isAuthenticated();
 
 $property = new Property;
+
+// Consulta para obtener todos los vendedores
+$sellers = Seller::all();
 
 // Array con mensajes de errores
 $errors = Property::getErrors(); // Accede a un metodo static de la clase Property que al ser static no hay necesidad de instanciar la clase.

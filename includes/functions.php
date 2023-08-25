@@ -37,3 +37,12 @@ function s($html): string
 
   return $s;
 }
+
+// Validar tipo de contenido
+function validateTypeContent($type)
+{
+  $types = ['seller', 'property'];
+
+  // Buscar type en types
+  return in_array($type, $types);
+}

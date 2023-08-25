@@ -37,9 +37,12 @@
 
 <fieldset>
   <legend>Vendedor</legend>
-
-  <select name="seller_id">
-    // todo: Falta vendedores
+  <label for="seller">Vendedor</label>
+  <select name="property[seller_id]" id="seller">
+    <option value="">-- Seleccione --</option>
+    <?php foreach ($sellers as $seller) : ?>
+      <option <?php echo $property->seller_id === $seller->id ? 'selected' : ''; ?> value="<?php echo s($seller->id); ?>"><?php echo s($seller->first_name) . " " . s($seller->last_name); ?></option>
+    <?php endforeach; ?>
 
   </select>
 </fieldset>

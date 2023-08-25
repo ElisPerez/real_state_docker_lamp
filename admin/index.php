@@ -4,9 +4,11 @@ require '../includes/app.php';
 isAuthenticated();
 // Inport Property class
 use App\Property;
+use App\Seller;
 
 // Implementar metodo para obtener todas las propiedades
 $properties = Property::all();
+$sellers = Seller::all();
 
 // Muestra mensaje condicional
 $result = $_GET["result"] ?? null;
@@ -17,8 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
   $id = filter_var($id,  FILTER_VALIDATE_INT);
 
   if ($id) {
-    $property = Property::find($id);
-    $property->delete();
+    $type = $_POST['type'];
+    if (validateTypeContent($type))
+
+      // Compara lo que vamos a eliminar
+      if ($type === 'seller') {
+        $seller = Seller::find($id);
+        $seller->delete();
+      } else if ($type === 'property') {
+        $property = Property::find($id);
+        $property->delete();
+      }
   }
 }
 
@@ -37,6 +48,8 @@ incluirTemplate('header');
   <?php endif; ?>
 
   <a href="/admin/properties/create.php" class="boton boton-verde">Nueva Propiedad</a>
+
+  <h2>Propiedades</h2>
 
   <table class="properties">
     <thead>
@@ -59,10 +72,43 @@ incluirTemplate('header');
           <td><img src="/images/<?php echo $property->image; ?>" alt="Casa en la playa" class="image-table" /></td>
           <td>$<?php echo $property->price; ?></td>
           <td>
-            <a href="properties/update.php?id=<?php echo $property->id; ?>" class="boton-amarillo-block">Actualizar</a>
+            <a href="/admin/properties/update.php?id=<?php echo $property->id; ?>" class="boton-amarillo-block">Actualizar</a>
 
             <form method="POST" class="w-100">
               <input type="hidden" name="id" value="<?php echo $property->id; ?>" />
+              <input type="hidden" name="type" value="property" />
+              <input type="submit" class="boton-rojo-block" value="Eliminar" />
+            </form>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+
+  <h2>Vendedores</h2>
+
+  <table class="properties">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mostrar los datos de la DB -->
+      <?php foreach ($sellers as $seller) : ?>
+        <tr>
+          <td><?php echo $seller->id; ?></td>
+          <td><?php echo $seller->first_name . " " . $seller->last_name; ?></td>
+          <td><?php echo $seller->phone; ?></td>
+          <td>
+            <a href="/admin/sellers/update.php?id=<?php echo $seller->id; ?>" class="boton-amarillo-block">Actualizar</a>
+
+            <form method="POST" class="w-100">
+              <input type="hidden" name="id" value="<?php echo $seller->id; ?>" />
+              <input type="hidden" name="type" value="seller" />
               <input type="submit" class="boton-rojo-block" value="Eliminar" />
             </form>
           </td>
@@ -72,9 +118,4 @@ incluirTemplate('header');
   </table>
 </main>
 
-<?php
-// Cerrar la conexion a la DB
-mysqli_close($db_connection);
-
-incluirTemplate('footer');
-?>
+<?php incluirTemplate('footer'); ?>

@@ -2,6 +2,7 @@
 // Functions
 
 use App\Property;
+use App\Seller;
 use Intervention\Image\ImageManagerStatic as InterImage;
 
 require '../../includes/app.php';
@@ -20,9 +21,9 @@ if (!$id) {
 // Consulta para obtener la propiedad a actualizar
 $property = Property::find($id);
 
-// Consultar para obtener los vendedores
-$query_sellers = "SELECT * FROM sellers;";
-$response_sellers = mysqli_query($db_connect, $query_sellers);
+// Consulta para obtener todos los vendedores
+$sellers = Seller::all();
+
 
 // Array con mensajes de errores
 $errors = Property::getErrors();

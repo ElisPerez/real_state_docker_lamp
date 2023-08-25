@@ -108,3 +108,12 @@ Open web browser with yout project at [http://127.0.0.1:80](http://127.0.0.1:80)
 # Notas de PHP
 
 - La función `mysqli_fetch_assoc` devuelve una fila de la tabla cada vez que se llame. Cuando se acaban las filas devuelve null.
+
+# Errores al Eliminar un registro en la DB desde /admin
+
+## Se intenta eliminar un registro y aunque parece que todo sale bien no afectó la tabla en db asi que sigue apareciendo el registro que se intentó borrar. El error a continuación no se vé desde la aplicacion sino intentando hacer el query directamente en el programa TablePlus.
+
+- Error: Query 1: Cannot delete or update a parent row: a foreign key constraint fails (`realstate_crud`.`properties`, CONSTRAINT `fk_properties_sellers` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`id`))
+  - Este error indica que no se puede eliminar este registro debido a la existencia de uno o más registros en otra tabla (properties) que tienen una relación con el ID del vendedor.
+  - Para resolverlo, es necesario eliminar los registros relacionados en la tabla hija (properties) antes de eliminar el registro en la tabla padre (sellers).
+    - En este caso, la tabla `sellers` es la tabla PADRE de `properties`.

@@ -3,9 +3,9 @@ require 'functions.php';
 require 'config/database.php';
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Property;
+use App\ActiveRecord;
 
 // Connect to DB
-$db_connect = connectDB();
+$db_connect = connectDB(); // TODO: Comprobar si se debe eliminar.
 
-Property::setDB($db_connect);
+ActiveRecord::setDB($db_connect);
