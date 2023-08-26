@@ -2,6 +2,20 @@
   .contenedor-anuncios {
     @include grid(3, 2rem);
   }
+
+  .anuncio {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .contenido-anuncio {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  p {
+    flex-grow: 1;
+  }
 }
 
 .anuncio {
@@ -20,7 +34,7 @@
 }
 
 .precio {
-  color: $info;
+  color: $success;
   font-weight: $bold;
   font-size: 3rem;
 }

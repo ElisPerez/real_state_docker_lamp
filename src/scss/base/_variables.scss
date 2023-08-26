@@ -22,6 +22,7 @@ $gray-scale: (
   900: #121212,
 );
 $gray: map-get($gray-scale, 100);
+
 $darkGray: map-get($gray-scale, 500); // Accede al tono de gris en el índice 500
 $primary: #3498db;
 $secondary: #e73ce4;

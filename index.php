@@ -39,11 +39,11 @@ incluirTemplate('header', true);
   </div>
 </main>
 
-<section class="seccion contenedor">
+<section class="contenedor seccion">
   <h2>Casas y Depas en Venta</h2>
 
   <?php
-  $limit = 3;
+  // $limit = 3;
 
   include 'includes/templates/anuncios.php';
 
