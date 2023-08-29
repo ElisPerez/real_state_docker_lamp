@@ -42,12 +42,7 @@ incluirTemplate('header', true);
 <section class="contenedor seccion">
   <h2>Casas y Depas en Venta</h2>
 
-  <?php
-  // $limit = 3;
-
-  include 'includes/templates/anuncios.php';
-
-  ?>
+  <?php include 'includes/templates/anuncios.php'; ?>
 
   <div class="alinear-derecha">
     <a href="anuncios.php" class="boton-primary">Ver todas</a>
